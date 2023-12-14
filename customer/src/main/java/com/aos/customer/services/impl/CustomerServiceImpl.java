@@ -25,7 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
         .lastName(customerRegistrationRequestDTO.lastName())
         .email(customerRegistrationRequestDTO.email())
         .build();
-
+    // todo: check if email valid
+    // todo: check if email not taken
     customerRepository.save(customer);
   }
 
