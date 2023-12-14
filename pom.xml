@@ -7,10 +7,14 @@
   <groupId>com.aos</groupId>
   <artifactId>amigosservices</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <name>amigosservices</name>
   <!-- FIXME change it to the project's website -->
   <url>https://www.aos.com</url>
+  <modules>
+    <module>customer</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
