@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aos.fraud.controller.dto.FraudCheckResponseDTO;
 import com.aos.fraud.services.FraudCheckService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("api/v1/fraud-check")
+@Slf4j
 public class FraudController {
 
   private FraudCheckService fraudCheckService;
@@ -23,6 +26,8 @@ public class FraudController {
 
   @GetMapping(path = "{customerId}")
   public ResponseEntity<Object> isFraudster(@PathVariable("customerId") Integer customerId) {
+    log.info("fraud check request for customer {}", customerId);
+
     boolean isFraudster = fraudCheckService.isFraudlentCustomer(customerId);
     return ResponseEntity.ok().body(new FraudCheckResponseDTO(isFraudster));
   }
