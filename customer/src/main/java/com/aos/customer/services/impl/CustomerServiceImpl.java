@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     customerRepository.saveAndFlush(customer);
 
     FraudCheckResponseDTO fraudCheckResponse = customerConfig.restTemplate().getForObject(
-        "http://localhost:8081/api/v1/fraud-check/{customerId}",
+        "http://FRAUD/api/v1/fraud-check/{customerId}",
         FraudCheckResponseDTO.class,
         customer.getId());
 
