@@ -1,11 +1,15 @@
 package com.aos.customer.services.impl;
 
+import com.aos.clients.fraud.FraudCheckResponse;
+import com.aos.clients.fraud.FraudClient;
+import com.aos.clients.notification.NotificationClient;
+import com.aos.clients.notification.NotificationRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aos.customer.config.CustomerConfig;
 import com.aos.customer.controllers.dto.CustomerRegistrationRequestDTO;
-import com.aos.customer.controllers.dto.FraudCheckResponseDTO;
 import com.aos.customer.domain.model.Customer;
 import com.aos.customer.domain.repository.CustomerRepository;
 import com.aos.customer.services.CustomerService;
@@ -13,13 +17,16 @@ import com.aos.customer.services.CustomerService;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-  private CustomerRepository customerRepository;
-  private CustomerConfig customerConfig;
+  private final CustomerRepository customerRepository;
+  private final FraudClient fraudClient;
+  private final NotificationClient notificationClient;
 
   @Autowired
-  public CustomerServiceImpl(CustomerRepository customerRepository, CustomerConfig customerConfig) {
+  public CustomerServiceImpl(CustomerRepository customerRepository, FraudClient fraudClient,
+      NotificationClient notificationClient) {
     this.customerRepository = customerRepository;
-    this.customerConfig = customerConfig;
+    this.fraudClient = fraudClient;
+    this.notificationClient = notificationClient;
   }
 
   @Override
@@ -33,15 +40,26 @@ public class CustomerServiceImpl implements CustomerService {
     // todo: check if email not taken
     customerRepository.saveAndFlush(customer);
 
-    FraudCheckResponseDTO fraudCheckResponse = customerConfig.restTemplate().getForObject(
-        "http://FRAUD/api/v1/fraud-check/{customerId}",
-        FraudCheckResponseDTO.class,
-        customer.getId());
+    // FraudCheckResponseDTO fraudCheckResponse =
+    // customerConfig.restTemplate().getForObject(
+    // "http://FRAUD/api/v1/fraud-check/{customerId}",
+    // FraudCheckResponseDTO.class,
+    // customer.getId());
+
+    FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
 
     if (fraudCheckResponse.isFraudster()) {
       throw new IllegalStateException("fraudster");
     }
-    // todo: send notification
+
+    // todo: make it async, i.e add to queue
+    NotificationRequest notificationRequest = new NotificationRequest(
+        customer.getId(),
+        customer.getEmail(),
+        String.format("Hi %s, welcome to Amigoscode...",
+            customer.getFirstName()));
+
+    notificationClient.sendNotification(notificationRequest);
   }
 
 }

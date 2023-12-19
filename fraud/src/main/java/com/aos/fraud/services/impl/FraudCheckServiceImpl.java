@@ -10,7 +10,7 @@ import com.aos.fraud.services.FraudCheckService;
 @Service
 public class FraudCheckServiceImpl implements FraudCheckService {
 
-  private FraudCheckHistoryRepository fraudCheckHistoryRepository;
+  private final FraudCheckHistoryRepository fraudCheckHistoryRepository;
 
   @Autowired
   public FraudCheckServiceImpl(FraudCheckHistoryRepository fraudCheckHistoryRepository) {
