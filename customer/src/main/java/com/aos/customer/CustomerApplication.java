@@ -10,10 +10,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableFeignClients(basePackages = "com.aos.clients")
-public class CustomerApplication
-{
-    public static void main( String[] args )
-    {
+public class CustomerApplication {
+    public static void main(String[] args) {
         SpringApplication.run(CustomerApplication.class, args);
     }
 }

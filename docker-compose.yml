@@ -17,5 +17,10 @@ services:
     ports:
       - 9000:8080
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+
 volumes:
   postgres:
