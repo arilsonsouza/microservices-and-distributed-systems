@@ -8,6 +8,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class RabbitMQConfig {
@@ -16,11 +17,13 @@ public class RabbitMQConfig {
     public RabbitMQConfig(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
+
     @Bean
+    @Primary
     public AmqpTemplate amqpTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jacksonConverter());
-        return  rabbitTemplate;
+        return rabbitTemplate;
     }
 
     @Bean
@@ -28,7 +31,7 @@ public class RabbitMQConfig {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jacksonConverter());
-        return  factory;
+        return factory;
     }
 
     @Bean

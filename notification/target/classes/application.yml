@@ -20,6 +20,8 @@ spring:
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
       ddl-auto: create-drop
     show-sql: true
+  rabbitmq:
+    addresses: localhost:5672
 
 eureka:
   client:
