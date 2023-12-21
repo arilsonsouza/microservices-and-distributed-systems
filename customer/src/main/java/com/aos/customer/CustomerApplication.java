@@ -8,7 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * Hello world!
  *
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "com.aos.customer",
+        "com.aos.amqp",
+})
 @EnableFeignClients(basePackages = "com.aos.clients")
 public class CustomerApplication {
     public static void main(String[] args) {
