@@ -1,0 +1,4 @@
+com/aos/clients/fraud/FraudClient.class
+com/aos/clients/fraud/FraudCheckResponse.class
+com/aos/clients/notification/NotificationRequest.class
+com/aos/clients/notification/NotificationClient.class
