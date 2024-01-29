@@ -1,0 +1,53 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: notification
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://postgres:5432/notification
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: create-drop
+    show-sql: true
+  rabbitmq:
+    addresses: rabbitmq:5672
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+    correlation: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+management:
+  #  endpoints.web.exposure.include: '*'
+  tracing:
+    sampling.probability: 1.0
+    propagation.type: w3c
+    enabled: true
+    baggage.enabled: true
+  #  metrics:
+  #    distribution.percentiles-histogram.http.server.requests: true
+  zipkin.tracing.endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queues:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key
