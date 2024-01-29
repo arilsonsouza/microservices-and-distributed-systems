@@ -30,6 +30,7 @@
     <spring.boot.dependencies.version>3.2.0</spring.boot.dependencies.version>
     <spring-cloud.version>2023.0.0</spring-cloud.version>
     <micrometer-tracing.version>1.2.1</micrometer-tracing.version>
+    <image>arilson/${project.artifactId}:${project.version}</image>
   </properties>
 
   <dependencyManagement>
@@ -91,6 +92,36 @@
             <execution>
               <goals>
                 <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>3.4.0</version>
+          <configuration>
+            <from>
+              <image>eclipse-temurin:17-jdk-alpine@sha256:0e6e494ac4da6509a038b7689250bc7ea68beaf8a5efbca5ed7c8692457b283c</image>
+              <platforms>
+                <platform>
+                  <architecture>amd64</architecture>
+                  <os>linux</os>
+                </platform>
+              </platforms>
+            </from>
+            <to>
+              <tags>
+                <tag>latest</tag>
+              </tags>
+            </to>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                  <goal>build</goal>
               </goals>
             </execution>
           </executions>

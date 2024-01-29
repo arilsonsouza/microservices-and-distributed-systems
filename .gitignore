@@ -58,3 +58,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Build docker image
+# mvn clean package -P build-docker-image
