@@ -17,6 +17,8 @@ services:
 
   adminer:
     image: adminer
+    networks:
+      - spring
     ports:
       - 9000:8080
 
@@ -41,72 +43,72 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  eureka-server:
-    image: arilson/eureka-server:latest
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-  apigw:
-    image: arilson/apigw:latest
-    container_name: apigw
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - eureka-server
-  customer:
-    image: arilson/customer:latest
-    container_name: customer
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - eureka-server
-      - apigw
-      - postgres
-      - rabbitmq
-  fraud:
-    image: arilson/fraud:latest
-    container_name: fraud
-    ports:
-      - "8081:8081"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - eureka-server
-      - postgres
-      - rabbitmq
-  notification:
-    image: arilson/notification:latest
-    container_name: notification
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - zipkin
-      - postgres
-      - rabbitmq
-      - eureka-server
+  # eureka-server:
+  #   image: arilson/eureka-server:latest
+  #   container_name: eureka-server
+  #   ports:
+  #     - "8761:8761"
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   networks:
+  #     - spring
+  #   depends_on:
+  #     - zipkin
+  # apigw:
+  #   image: arilson/apigw:latest
+  #   container_name: apigw
+  #   ports:
+  #     - "8083:8083"
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   networks:
+  #     - spring
+  #   depends_on:
+  #     - zipkin
+  #     - eureka-server
+  # customer:
+  #   image: arilson/customer:latest
+  #   container_name: customer
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   networks:
+  #     - spring
+  #   depends_on:
+  #     - zipkin
+  #     - eureka-server
+  #     - apigw
+  #     - postgres
+  #     - rabbitmq
+  # fraud:
+  #   image: arilson/fraud:latest
+  #   container_name: fraud
+  #   ports:
+  #     - "8081:8081"
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   networks:
+  #     - spring
+  #   depends_on:
+  #     - zipkin
+  #     - eureka-server
+  #     - postgres
+  #     - rabbitmq
+  # notification:
+  #   image: arilson/notification:latest
+  #   container_name: notification
+  #   ports:
+  #     - "8082:8082"
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   networks:
+  #     - spring
+  #   depends_on:
+  #     - zipkin
+  #     - postgres
+  #     - rabbitmq
+  #     - eureka-server
 
 networks:
   spring:
