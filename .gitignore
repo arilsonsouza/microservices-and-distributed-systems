@@ -67,6 +67,7 @@ build/
 # minikube start --memory=4g
 # minikube status
 # minikube ip
+# minikube tunnel
 
 
 # kubectl commands
@@ -77,3 +78,5 @@ build/
 # kubectl describe pod postgres-0
 # kubectl logs postgres-0
 # kubectl exec -it postgres-0 -- psql -U postgres
+#  kubectl describe pod customer-6dcfbdc757-v4x58
+#  kubectl logs customer-69dd5678f4-kv9fc
