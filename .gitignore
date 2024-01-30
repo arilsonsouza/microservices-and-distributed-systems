@@ -62,3 +62,18 @@ build/
 
 # Build docker image
 # mvn clean package -P build-docker-image
+
+# minikube commands
+# minikube start --memory=4g
+# minikube status
+# minikube ip
+
+
+# kubectl commands
+# kubectl version --client
+
+# kubectl apply -f bootstrap/postgres/
+# kubectl  get pods -w
+# kubectl describe pod postgres-0
+# kubectl logs postgres-0
+# kubectl exec -it postgres-0 -- psql -U postgres
