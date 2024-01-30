@@ -1,12 +1,12 @@
 server:
-  port: 8082
+  port: 8081
 
 spring:
   application:
-    name: notification
+    name: fraud
   datasource:
     username: postgres
-    url: jdbc:postgresql://postgres:5432/notification
+    url: jdbc:postgresql://postgres:5432/fraud
     password: postgres
     driver-class-name: org.postgresql.Driver
     testWhileIdle: true
@@ -20,13 +20,11 @@ spring:
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
       ddl-auto: create-drop
     show-sql: true
-  rabbitmq:
-    addresses: rabbitmq:5672
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
     enabled: false
 
 logging:
@@ -44,11 +42,3 @@ management:
   #  metrics:
   #    distribution.percentiles-histogram.http.server.requests: true
   zipkin.tracing.endpoint: ${ZIPKIN_ENDPOINT:http://zipkin:9411/api/v2/spans}
-
-rabbitmq:
-  exchanges:
-    internal: internal.exchange
-  queues:
-    notification: notification.queue
-  routing-keys:
-    internal-notification: internal.notification.routing-key
