@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaListeners {
 
-  @KafkaListener(topics = "amigoscode", groupId = "groupId")
-  void listener(String data) {
-    System.out.println("Listener receive: " + data);
+  @KafkaListener(topics = "amigoscode", groupId = "groupId", containerFactory = "factory" // must be added or will
+                                                                                          // default to in-built
+  )
+  void listener(KafkaMessage data) {
+    System.out.println("Listener receive: " + data.message() + " at: " + data.createdAt());
   }
 }
